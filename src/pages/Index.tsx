@@ -344,14 +344,38 @@ const Index = () => {
       </SectionShell>
 
       {/* HUMAN — Will Byers */}
+      <div className="group/human">
       <SectionShell
         id="human"
         label="emotional resonance / 06"
         title="THE HUMAN SIGNAL"
         background={
           <>
-            <div className="absolute bottom-0 left-4 h-[95%] opacity-90 drop-shadow-[0_0_30px_hsl(var(--primary)/0.3)] md:left-20"><HumanFigure variant="will" /></div>
-            <div className="absolute bottom-0 right-10 hidden h-[60%] opacity-50 md:block"><HumanFigure variant="will" /></div>
+            {/* Will Byers — interactive */}
+            <div className="absolute bottom-0 left-4 h-[95%] opacity-90 drop-shadow-[0_0_30px_hsl(var(--primary)/0.3)] md:left-20">
+              <HumanFigure variant="will" interactive />
+            </div>
+            <div className="absolute bottom-0 right-10 hidden h-[60%] opacity-50 transition-opacity duration-700 group-hover/human:opacity-80 md:block">
+              <HumanFigure variant="will" interactive />
+            </div>
+
+            {/* Demobats flying across */}
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute" style={{ animation: "bat-fly 26s linear infinite", animationDelay: "0s" }}><Demobat size={45} /></div>
+              <div className="absolute" style={{ animation: "bat-fly 32s linear infinite", animationDelay: "-8s" }}><Demobat size={60} /></div>
+              <div className="absolute" style={{ animation: "bat-fly 22s linear infinite", animationDelay: "-15s" }}><Demobat size={36} /></div>
+              <div className="absolute" style={{ animation: "bat-fly 38s linear infinite", animationDelay: "-22s" }}><Demobat size={52} /></div>
+            </div>
+
+            {/* Hover-triggered lightning flash localized to section */}
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/human:opacity-100">
+              <div className="absolute inset-0" style={{ background: "hsl(0 100% 60% / 0.08)", animation: "screen-flash 2s ease-out infinite" }} />
+              <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M 30 0 L 28 25 L 35 30 L 25 60 L 32 65 L 22 100" stroke="hsl(0 100% 70%)" strokeWidth="0.3" fill="none" vectorEffect="non-scaling-stroke" style={{ animation: "lightning 1.4s ease-out infinite" }} />
+                <path d="M 70 0 L 73 22 L 66 28 L 76 55 L 68 62 L 78 100" stroke="hsl(0 100% 65%)" strokeWidth="0.25" fill="none" vectorEffect="non-scaling-stroke" style={{ animation: "lightning 1.6s ease-out infinite", animationDelay: "0.3s" }} />
+              </svg>
+            </div>
+
             <Particles count={10} />
           </>
         }
@@ -364,7 +388,7 @@ const Index = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="border-l-2 border-primary/40 pl-5"
+              className="border-l-2 border-primary/40 pl-5 transition-all duration-500 hover:border-primary hover:pl-7 hover:shadow-[0_0_20px_hsl(var(--primary)/0.2)]"
             >
               <p className="font-mono-glitch text-xs text-primary/70">{e.date} · {e.org}</p>
               <h3 className="font-display mt-1 text-xl uppercase tracking-wide text-foreground">{e.role}</h3>
@@ -376,6 +400,7 @@ const Index = () => {
           </p>
         </div>
       </SectionShell>
+      </div>
 
       {/* LEETCODE — signal transmission */}
       <SectionShell
