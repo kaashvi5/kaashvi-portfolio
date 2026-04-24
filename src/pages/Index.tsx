@@ -9,6 +9,22 @@ import Demodog from "@/components/upside-down/Demodog";
 import Demobat from "@/components/upside-down/Demobat";
 import HumanFigure from "@/components/upside-down/HumanFigure";
 import SectionShell from "@/components/upside-down/SectionShell";
+import {
+  useMysteries,
+  MysteryToast,
+  MysteryTracker,
+  GlobalMysteryListener,
+  UpsideDownFlipWatcher,
+} from "@/components/upside-down/MysterySystem";
+import {
+  HiddenClock,
+  ElevenOrb,
+  DustinHat,
+  AlphabetLights,
+  DemogorgonBloom,
+  VHSRewind,
+  MusicBox,
+} from "@/components/upside-down/HiddenInteractives";
 
 const skills = {
   Languages: ["Python", "Java", "C++", "JavaScript", "SQL"],
@@ -40,6 +56,14 @@ const certifications = [
 
 const Index = () => {
   const [decrypting, setDecrypting] = useState(false);
+  const { solved, solve, latest, dismissLatest, reset } = useMysteries();
+
+  useEffect(() => {
+    if (solved.size === 14 && !solved.has("endgame-pancakes")) {
+      // when 14 unique are solved, trigger endgame
+      setTimeout(() => solve("endgame-pancakes"), 600);
+    }
+  }, [solved, solve]);
 
   useEffect(() => {
     document.title = "Kaashvi Gupta — Surviving the Upside Down";
@@ -63,6 +87,10 @@ const Index = () => {
   return (
     <main className="relative min-h-screen bg-background text-foreground">
       <Lightning />
+      <GlobalMysteryListener onSolve={solve} />
+      <UpsideDownFlipWatcher onSolve={solve} solved={solved.has("scroll-upside-down")} />
+      <MysteryTracker solved={solved} onReset={reset} />
+      <MysteryToast latest={latest} onDismiss={dismissLatest} />
 
       {/* Floating nav */}
       <nav className="fixed left-1/2 top-6 z-50 -translate-x-1/2 rounded-full border border-primary/20 bg-background/60 px-5 py-2 backdrop-blur-md">
@@ -175,6 +203,7 @@ const Index = () => {
           <>
             <div className="absolute inset-0 vhs" />
             <div className="absolute right-4 top-10 h-[80%] opacity-40 md:right-20"><HumanFigure variant="henry" /></div>
+            <DemogorgonBloom onSolve={solve} />
             <Particles count={12} />
           </>
         }
@@ -278,6 +307,7 @@ const Index = () => {
               <div className="absolute" style={{ animation: "bat-fly 22s linear infinite", animationDelay: "-12s" }}><Demobat size={40} /></div>
               <div className="absolute" style={{ animation: "bat-fly 30s linear infinite", animationDelay: "-18s" }}><Demobat size={60} /></div>
             </div>
+            <DustinHat onSolve={solve} />
           </>
         }
       >
@@ -315,7 +345,7 @@ const Index = () => {
         id="system"
         label="hive mind / 05"
         title="SYSTEM ARCHITECTURE"
-        background={<><MindFlayer /><Particles count={20} /></>}
+        background={<><MindFlayer /><Particles count={20} /><HiddenClock onSolve={solve} /><MusicBox onSolve={solve} /><ElevenOrb onSolve={solve} /></>}
       >
         <div className="mx-auto max-w-3xl">
           <p className="text-lg leading-relaxed text-foreground/90">
@@ -477,6 +507,8 @@ const Index = () => {
               ))}
             </div>
           </div>
+          <AlphabetLights onSolve={solve} />
+          <VHSRewind onSolve={solve} />
         </div>
       </SectionShell>
 
