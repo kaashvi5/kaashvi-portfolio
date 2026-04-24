@@ -8,13 +8,11 @@ interface Props {
   children: ReactNode;
   background?: ReactNode;
   className?: string;
-  groupName?: string;
 }
 
-const SectionShell = ({ id, label, title, children, background, className = "", groupName }: Props) => {
-  const groupClass = groupName ? `group/${groupName}` : "";
+const SectionShell = ({ id, label, title, children, background, className = "" }: Props) => {
   return (
-    <section id={id} className={`relative overflow-hidden py-28 md:py-36 ${groupClass} ${className}`}>
+    <section id={id} className={`relative overflow-hidden py-28 md:py-36 ${className}`}>
       <div className="pointer-events-none absolute inset-0 bg-fog" />
       {background}
       <div className="container relative z-10 mx-auto max-w-6xl px-6">
