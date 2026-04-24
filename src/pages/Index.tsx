@@ -59,6 +59,13 @@ const Index = () => {
   const { solved, solve, latest, dismissLatest, reset } = useMysteries();
 
   useEffect(() => {
+    if (solved.size === 14 && !solved.has("endgame-pancakes")) {
+      // when 14 unique are solved, trigger endgame
+      setTimeout(() => solve("endgame-pancakes"), 600);
+    }
+  }, [solved, solve]);
+
+  useEffect(() => {
     document.title = "Kaashvi Gupta — Surviving the Upside Down";
     const meta = document.querySelector('meta[name="description"]') || document.createElement("meta");
     meta.setAttribute("name", "description");
