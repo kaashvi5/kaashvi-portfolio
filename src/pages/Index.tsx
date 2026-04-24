@@ -196,6 +196,7 @@ const Index = () => {
           <>
             <div className="absolute inset-0 vhs" />
             <div className="absolute right-4 top-10 h-[80%] opacity-40 md:right-20"><HumanFigure variant="henry" /></div>
+            <DemogorgonBloom onSolve={solve} />
             <Particles count={12} />
           </>
         }
@@ -299,6 +300,7 @@ const Index = () => {
               <div className="absolute" style={{ animation: "bat-fly 22s linear infinite", animationDelay: "-12s" }}><Demobat size={40} /></div>
               <div className="absolute" style={{ animation: "bat-fly 30s linear infinite", animationDelay: "-18s" }}><Demobat size={60} /></div>
             </div>
+            <DustinHat onSolve={solve} />
           </>
         }
       >
@@ -336,7 +338,7 @@ const Index = () => {
         id="system"
         label="hive mind / 05"
         title="SYSTEM ARCHITECTURE"
-        background={<><MindFlayer /><Particles count={20} /></>}
+        background={<><MindFlayer /><Particles count={20} /><HiddenClock onSolve={solve} /><MusicBox onSolve={solve} /><ElevenOrb onSolve={solve} /></>}
       >
         <div className="mx-auto max-w-3xl">
           <p className="text-lg leading-relaxed text-foreground/90">
@@ -498,6 +500,8 @@ const Index = () => {
               ))}
             </div>
           </div>
+          <AlphabetLights onSolve={solve} />
+          <VHSRewind onSolve={solve} />
         </div>
       </SectionShell>
 
