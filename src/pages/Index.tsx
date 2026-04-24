@@ -9,6 +9,22 @@ import Demodog from "@/components/upside-down/Demodog";
 import Demobat from "@/components/upside-down/Demobat";
 import HumanFigure from "@/components/upside-down/HumanFigure";
 import SectionShell from "@/components/upside-down/SectionShell";
+import {
+  useMysteries,
+  MysteryToast,
+  MysteryTracker,
+  GlobalMysteryListener,
+  UpsideDownFlipWatcher,
+} from "@/components/upside-down/MysterySystem";
+import {
+  HiddenClock,
+  ElevenOrb,
+  DustinHat,
+  AlphabetLights,
+  DemogorgonBloom,
+  VHSRewind,
+  MusicBox,
+} from "@/components/upside-down/HiddenInteractives";
 
 const skills = {
   Languages: ["Python", "Java", "C++", "JavaScript", "SQL"],
@@ -40,6 +56,7 @@ const certifications = [
 
 const Index = () => {
   const [decrypting, setDecrypting] = useState(false);
+  const { solved, solve, latest, dismissLatest, reset } = useMysteries();
 
   useEffect(() => {
     document.title = "Kaashvi Gupta — Surviving the Upside Down";
@@ -63,6 +80,10 @@ const Index = () => {
   return (
     <main className="relative min-h-screen bg-background text-foreground">
       <Lightning />
+      <GlobalMysteryListener onSolve={solve} />
+      <UpsideDownFlipWatcher onSolve={solve} solved={solved.has("scroll-upside-down")} />
+      <MysteryTracker solved={solved} onReset={reset} />
+      <MysteryToast latest={latest} onDismiss={dismissLatest} />
 
       {/* Floating nav */}
       <nav className="fixed left-1/2 top-6 z-50 -translate-x-1/2 rounded-full border border-primary/20 bg-background/60 px-5 py-2 backdrop-blur-md">
