@@ -129,7 +129,11 @@ const Index = () => {
         id="about"
         label="entity scan / 01"
         title="ABOUT THE SURVIVOR"
-        background={<><Vecna /><Particles count={18} /></>}
+        background={<>
+          <Vecna />
+          <div className="absolute right-6 top-10 hidden h-64 w-64 opacity-70 md:block"><Vecna /></div>
+          <Particles count={18} />
+        </>}
       >
         <div className="grid gap-10 md:grid-cols-5">
           <div className="md:col-span-3">
@@ -212,15 +216,21 @@ const Index = () => {
         background={
           <>
             <Particles count={10} />
-            {/* crawling demodogs */}
-            <div className="absolute top-[15%] w-full crawl" style={{ animationDelay: "0s" }}>
-              <Demodog className="h-12 w-auto opacity-60" />
+            {/* crawling demodogs — multiple visible creatures */}
+            <div className="absolute top-[10%] w-full crawl" style={{ animationDelay: "0s" }}>
+              <Demodog className="h-20 w-auto opacity-90 drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)]" />
             </div>
-            <div className="absolute top-[55%] w-full crawl" style={{ animationDelay: "-6s", animationDuration: "22s" }}>
-              <Demodog className="h-10 w-auto opacity-50" flip />
+            <div className="absolute top-[35%] w-full crawl" style={{ animationDelay: "-4s", animationDuration: "20s" }}>
+              <Demodog className="h-16 w-auto opacity-80" flip />
             </div>
-            <div className="absolute top-[80%] w-full crawl" style={{ animationDelay: "-12s", animationDuration: "26s" }}>
-              <Demodog className="h-8 w-auto opacity-40" />
+            <div className="absolute top-[58%] w-full crawl" style={{ animationDelay: "-9s", animationDuration: "24s" }}>
+              <Demodog className="h-24 w-auto opacity-85 drop-shadow-[0_0_25px_hsl(var(--primary)/0.4)]" />
+            </div>
+            <div className="absolute top-[78%] w-full crawl" style={{ animationDelay: "-14s", animationDuration: "26s" }}>
+              <Demodog className="h-14 w-auto opacity-75" flip />
+            </div>
+            <div className="absolute top-[92%] w-full crawl" style={{ animationDelay: "-3s", animationDuration: "30s" }}>
+              <Demodog className="h-12 w-auto opacity-70" />
             </div>
           </>
         }
@@ -340,7 +350,8 @@ const Index = () => {
         title="THE HUMAN SIGNAL"
         background={
           <>
-            <div className="absolute bottom-0 left-4 h-[85%] opacity-50 md:left-20"><HumanFigure variant="will" /></div>
+            <div className="absolute bottom-0 left-4 h-[95%] opacity-90 drop-shadow-[0_0_30px_hsl(var(--primary)/0.3)] md:left-20"><HumanFigure variant="will" /></div>
+            <div className="absolute bottom-0 right-10 hidden h-[60%] opacity-50 md:block"><HumanFigure variant="will" /></div>
             <Particles count={10} />
           </>
         }
