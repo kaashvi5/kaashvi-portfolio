@@ -349,14 +349,37 @@ const Index = () => {
         label="emotional resonance / 06"
         title="THE HUMAN SIGNAL"
         background={
-          <>
-            <div className="absolute bottom-0 left-4 h-[95%] opacity-90 drop-shadow-[0_0_30px_hsl(var(--primary)/0.3)] md:left-20"><HumanFigure variant="will" /></div>
-            <div className="absolute bottom-0 right-10 hidden h-[60%] opacity-50 md:block"><HumanFigure variant="will" /></div>
+          <div className="group/human absolute inset-0">
+            {/* Will Byers — interactive */}
+            <div className="absolute bottom-0 left-4 h-[95%] opacity-90 drop-shadow-[0_0_30px_hsl(var(--primary)/0.3)] md:left-20">
+              <HumanFigure variant="will" interactive />
+            </div>
+            <div className="absolute bottom-0 right-10 hidden h-[60%] opacity-50 transition-opacity duration-700 group-hover/human:opacity-80 md:block">
+              <HumanFigure variant="will" interactive />
+            </div>
+
+            {/* Demobats flying across */}
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute" style={{ animation: "bat-fly 26s linear infinite", animationDelay: "0s" }}><Demobat size={45} /></div>
+              <div className="absolute" style={{ animation: "bat-fly 32s linear infinite", animationDelay: "-8s" }}><Demobat size={60} /></div>
+              <div className="absolute" style={{ animation: "bat-fly 22s linear infinite", animationDelay: "-15s" }}><Demobat size={36} /></div>
+              <div className="absolute" style={{ animation: "bat-fly 38s linear infinite", animationDelay: "-22s" }}><Demobat size={52} /></div>
+            </div>
+
+            {/* Hover-triggered lightning flash localized to section */}
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/human:opacity-100">
+              <div className="absolute inset-0 animate-[screen-flash_2s_ease-out_infinite]" style={{ background: "hsl(0 100% 60% / 0.08)" }} />
+              <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M 30 0 L 28 25 L 35 30 L 25 60 L 32 65 L 22 100" stroke="hsl(0 100% 70%)" strokeWidth="0.3" fill="none" vectorEffect="non-scaling-stroke" style={{ animation: "lightning 1.4s ease-out infinite" }} />
+                <path d="M 70 0 L 73 22 L 66 28 L 76 55 L 68 62 L 78 100" stroke="hsl(0 100% 65%)" strokeWidth="0.25" fill="none" vectorEffect="non-scaling-stroke" style={{ animation: "lightning 1.6s ease-out infinite", animationDelay: "0.3s" }} />
+              </svg>
+            </div>
+
             <Particles count={10} />
-          </>
+          </div>
         }
       >
-        <div className="max-w-2xl space-y-10">
+        <div className="group/human max-w-2xl space-y-10">
           {experiences.map((e, i) => (
             <motion.div
               key={e.role}
