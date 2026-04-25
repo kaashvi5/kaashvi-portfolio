@@ -9,6 +9,9 @@ import Demodog from "@/components/upside-down/Demodog";
 import Demobat from "@/components/upside-down/Demobat";
 import HumanFigure from "@/components/upside-down/HumanFigure";
 import SectionShell from "@/components/upside-down/SectionShell";
+import WalkieTalkie from "@/components/upside-down/WalkieTalkie";
+import Torch from "@/components/upside-down/Torch";
+import EmergencyTransmission from "@/components/upside-down/EmergencyTransmission";
 import {
   useMysteries,
   MysteryToast,
@@ -26,7 +29,7 @@ import {
   MusicBox,
 } from "@/components/upside-down/HiddenInteractives";
 
-const skills = {
+const skills: Record<string, string[]> = {
   Languages: ["Python", "Java", "C++", "JavaScript", "SQL"],
   Web: ["HTML", "CSS", "REST API", "MongoDB"],
   Tools: ["Power BI", "VS Code", "Canva", "Figma", "Git", "GitHub", "Excel", "Lens Studio", "Tableau"],
@@ -56,11 +59,11 @@ const certifications = [
 
 const Index = () => {
   const [decrypting, setDecrypting] = useState(false);
+  const [walkie, setWalkie] = useState<string | null>(null);
   const { solved, solve, latest, dismissLatest, reset } = useMysteries();
 
   useEffect(() => {
     if (solved.size === 14 && !solved.has("endgame-pancakes")) {
-      // when 14 unique are solved, trigger endgame
       setTimeout(() => solve("endgame-pancakes"), 600);
     }
   }, [solved, solve]);
@@ -75,27 +78,54 @@ const Index = () => {
 
   const handleDecrypt = () => {
     setDecrypting(true);
+    // Open in a new tab as a fallback so users always get the file
     setTimeout(() => {
       const a = document.createElement("a");
       a.href = "/Kaashvi_Gupta_Resume.pdf";
       a.download = "Kaashvi_Gupta_Resume.pdf";
+      a.target = "_blank";
+      a.rel = "noopener";
+      document.body.appendChild(a);
       a.click();
+      document.body.removeChild(a);
       setDecrypting(false);
-    }, 1400);
+    }, 1200);
   };
 
   return (
     <main className="relative min-h-screen bg-background text-foreground">
       <Lightning />
       <GlobalMysteryListener onSolve={solve} />
-      <UpsideDownFlipWatcher onSolve={solve} solved={solved.has("scroll-upside-down")} />
+      <UpsideDownFlipWatcher onSolve={solve} />
       <MysteryTracker solved={solved} onReset={reset} />
       <MysteryToast latest={latest} onDismiss={dismissLatest} />
+      <WalkieTalkie
+        open={!!walkie}
+        category={walkie}
+        items={walkie ? skills[walkie] || [] : []}
+        onClose={() => setWalkie(null)}
+      />
+
+      {/* Persistent Henry Creel watcher in the background — fixed across all sections */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        {/* Far left silhouette */}
+        <div className="absolute bottom-0 left-2 hidden h-[70vh] opacity-25 breathe drop-shadow-[0_0_40px_hsl(0_80%_30%/0.5)] md:block">
+          <HumanFigure variant="henry" />
+        </div>
+        {/* Far right tall silhouette */}
+        <div className="absolute bottom-0 right-2 hidden h-[80vh] opacity-20 breathe drop-shadow-[0_0_60px_hsl(0_90%_40%/0.4)] md:block" style={{ animationDelay: "-3s" }}>
+          <HumanFigure variant="henry" />
+        </div>
+        {/* Mobile centered ghost */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[55vh] opacity-15 breathe md:hidden">
+          <HumanFigure variant="henry" />
+        </div>
+      </div>
 
       {/* Floating nav */}
       <nav className="fixed left-1/2 top-6 z-50 -translate-x-1/2 rounded-full border border-primary/20 bg-background/60 px-5 py-2 backdrop-blur-md">
-        <ul className="flex gap-5 font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground">
-          {["hero", "about", "origin", "skills", "projects", "system", "human", "leetcode", "resume", "contact"].map((s) => (
+        <ul className="flex flex-wrap justify-center gap-5 font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground">
+          {["hero", "about", "skills", "projects", "human", "leetcode", "resume", "contact"].map((s) => (
             <li key={s}>
               <a href={`#${s}`} className="transition-colors hover:text-primary">{s}</a>
             </li>
@@ -152,7 +182,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ABOUT — Vecna presence */}
+      {/* ABOUT — Vecna presence (GPA + Years removed) */}
       <SectionShell
         id="about"
         label="entity scan / 01"
@@ -181,8 +211,6 @@ const Index = () => {
             {[
               { k: "Degree", v: "B.Tech CSE — AI/ML" },
               { k: "University", v: "K.R. Mangalam University" },
-              { k: "Years", v: "2024 — 2028" },
-              { k: "GPA", v: "8.62 / 10" },
               { k: "Location", v: "New Delhi, IN" },
             ].map((row) => (
               <div key={row.k} className="flex justify-between border-b border-border/60 pb-2 font-mono-glitch text-sm">
@@ -194,58 +222,14 @@ const Index = () => {
         </div>
       </SectionShell>
 
-      {/* ORIGIN — Henry Creel + VHS */}
-      <SectionShell
-        id="origin"
-        label="archival footage / 02"
-        title="ORIGIN TRANSMISSION"
-        background={
-          <>
-            <div className="absolute inset-0 vhs" />
-            <div className="absolute right-4 top-10 h-[80%] opacity-40 md:right-20"><HumanFigure variant="henry" /></div>
-            <DemogorgonBloom onSolve={solve} />
-            <Particles count={12} />
-          </>
-        }
-      >
-        <div className="font-mono-glitch mb-6 flex items-center gap-3 text-xs uppercase text-primary/70">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-          REC · TAPE 001 · {new Date().toLocaleDateString()}
-        </div>
-        <div className="space-y-6 border-l-2 border-primary/40 pl-6">
-          {[
-            { y: "2024", t: "Began B.Tech in CSE — AI/ML at K.R. Mangalam University." },
-            { y: "05/2025", t: "PowerBI Intern at Codveda Technologies — built dashboards for data-driven decisions." },
-            { y: "08/2025", t: "Joined DevSphereIndia as Graphic Designer." },
-            { y: "09/2025", t: "Started editing video content for DevSphereIndia & TechEra." },
-            { y: "12/2025", t: "Stepped on stage as Associate Designer & Public Speaker at OSEN." },
-            { y: "04/2026", t: "Selected as Google Student Ambassador for Google Gemini." },
-          ].map((e, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="relative"
-            >
-              <span className="absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-primary shadow-[0_0_15px_hsl(var(--primary))]" />
-              <p className="font-mono-glitch text-xs text-primary/80">{e.y}</p>
-              <p className="text-foreground/90">{e.t}</p>
-            </motion.div>
-          ))}
-        </div>
-      </SectionShell>
-
-      {/* SKILLS — Demodogs */}
+      {/* SKILLS — Demodogs + Walkie Talkie reveal */}
       <SectionShell
         id="skills"
-        label="creature analysis / 03"
+        label="creature analysis / 02"
         title="SKILL SPECIMENS"
         background={
           <>
             <Particles count={10} />
-            {/* crawling demodogs — multiple visible creatures */}
             <div className="absolute top-[10%] w-full crawl" style={{ animationDelay: "0s" }}>
               <Demodog className="h-20 w-auto opacity-90 drop-shadow-[0_0_20px_hsl(var(--primary)/0.5)]" />
             </div>
@@ -258,33 +242,46 @@ const Index = () => {
             <div className="absolute top-[78%] w-full crawl" style={{ animationDelay: "-14s", animationDuration: "26s" }}>
               <Demodog className="h-14 w-auto opacity-75" flip />
             </div>
-            <div className="absolute top-[92%] w-full crawl" style={{ animationDelay: "-3s", animationDuration: "30s" }}>
-              <Demodog className="h-12 w-auto opacity-70" />
-            </div>
           </>
         }
       >
+        <p className="font-mono-glitch mb-6 text-xs uppercase tracking-widest text-primary/70">
+          ▸ tap a specimen to open the walkie-talkie · channel 4
+        </p>
         <div className="grid gap-6 md:grid-cols-2">
           {Object.entries(skills).map(([cat, items]) => (
-            <motion.div
+            <motion.button
+              type="button"
+              onClick={() => setWalkie(cat)}
               key={cat}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="group relative rounded-sm border border-primary/20 bg-card/40 p-6 backdrop-blur-sm transition-all hover:border-primary/60 hover:shadow-[0_0_30px_hsl(var(--primary)/0.2)]"
+              whileHover={{ scale: 1.02 }}
+              className="group relative rounded-sm border border-primary/20 bg-card/40 p-6 text-left backdrop-blur-sm transition-all hover:border-primary/60 hover:shadow-[0_0_30px_hsl(var(--primary)/0.2)]"
             >
-              <h3 className="font-display mb-4 text-sm uppercase tracking-[0.3em] text-primary">{cat}</h3>
-              <div className="flex flex-wrap gap-2">
-                {items.map((s) => (
+              <div className="flex items-center justify-between">
+                <h3 className="font-display text-sm uppercase tracking-[0.3em] text-primary">{cat}</h3>
+                <span className="font-mono-glitch text-[10px] uppercase tracking-widest text-primary/60 group-hover:text-primary">
+                  ▸ open
+                </span>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {items.slice(0, 4).map((s) => (
                   <span
                     key={s}
-                    className="font-mono-glitch cursor-default rounded-sm border border-border bg-background/60 px-3 py-1 text-xs text-foreground/80 transition-all hover:border-primary hover:bg-primary/10 hover:text-primary hover:shadow-[0_0_10px_hsl(var(--primary)/0.5)]"
+                    className="font-mono-glitch rounded-sm border border-border bg-background/60 px-3 py-1 text-xs text-foreground/80"
                   >
                     {s}
                   </span>
                 ))}
+                {items.length > 4 && (
+                  <span className="font-mono-glitch rounded-sm border border-primary/40 bg-primary/10 px-3 py-1 text-xs text-primary">
+                    +{items.length - 4} more
+                  </span>
+                )}
               </div>
-            </motion.div>
+            </motion.button>
           ))}
         </div>
         <div className="mt-10">
@@ -293,14 +290,17 @@ const Index = () => {
         </div>
       </SectionShell>
 
-      {/* PROJECTS — Demobats */}
+      {/* PROJECTS — Demobats + 2 moving torches */}
       <SectionShell
         id="projects"
-        label="missions / 04"
+        label="missions / 03"
         title="PROJECT FLIGHT LOGS"
         background={
           <>
             <Particles count={8} />
+            {/* Two moving torches sweeping the section */}
+            <Torch side="left" delay={0} duration={16} />
+            <Torch side="right" delay={4} duration={20} />
             <div className="absolute inset-0">
               <div className="absolute" style={{ animation: "bat-fly 18s linear infinite", animationDelay: "0s" }}><Demobat size={50} /></div>
               <div className="absolute" style={{ animation: "bat-fly 24s linear infinite", animationDelay: "-5s" }}><Demobat size={70} /></div>
@@ -340,48 +340,22 @@ const Index = () => {
         </div>
       </SectionShell>
 
-      {/* SYSTEM — Mind Flayer */}
-      <SectionShell
-        id="system"
-        label="hive mind / 05"
-        title="SYSTEM ARCHITECTURE"
-        background={<><MindFlayer /><Particles count={20} /><HiddenClock onSolve={solve} /><MusicBox onSolve={solve} /><ElevenOrb onSolve={solve} /></>}
-      >
-        <div className="mx-auto max-w-3xl">
-          <p className="text-lg leading-relaxed text-foreground/90">
-            Experience as a <span className="text-blood">PowerBI Intern at Codveda Technologies</span> shaped
-            how I approach systems — building dashboards that visualize trends and support
-            data-driven decision making.
-          </p>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground">
-            Across roles I work with cloud and deployment platforms — AWS, Vercel, Netlify, Render,
-            Pinata, Lovable — composing pieces into systems that feel intentional from the
-            interface down to the infrastructure.
-          </p>
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {[
-              { k: "System Design", v: "Architecture & flow" },
-              { k: "Cloud Computing", v: "AWS · Vercel · Render" },
-              { k: "Data Visualization", v: "Power BI · Tableau" },
-            ].map((b) => (
-              <div key={b.k} className="rounded-sm border border-primary/20 bg-card/30 p-4 backdrop-blur-sm">
-                <p className="font-display text-xs uppercase tracking-widest text-primary">{b.k}</p>
-                <p className="mt-1 text-sm text-foreground/80">{b.v}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </SectionShell>
+      {/* HUMAN — Will Byers (kept; system architecture removed) */}
+      {/* Hidden interactives that lived inside the removed system section */}
+      <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-0 opacity-0">
+        <HiddenClock onSolve={solve} />
+        <MusicBox onSolve={solve} />
+        <ElevenOrb onSolve={solve} />
+        <MindFlayer />
+      </div>
 
-      {/* HUMAN — Will Byers */}
       <div className="group/human">
       <SectionShell
         id="human"
-        label="emotional resonance / 06"
+        label="emotional resonance / 04"
         title="THE HUMAN SIGNAL"
         background={
           <>
-            {/* Will Byers — interactive */}
             <div className="absolute bottom-0 left-4 h-[95%] opacity-90 drop-shadow-[0_0_30px_hsl(var(--primary)/0.3)] md:left-20">
               <HumanFigure variant="will" interactive />
             </div>
@@ -389,7 +363,6 @@ const Index = () => {
               <HumanFigure variant="will" interactive />
             </div>
 
-            {/* Demobats flying across */}
             <div className="absolute inset-0 overflow-hidden">
               <div className="absolute" style={{ animation: "bat-fly 26s linear infinite", animationDelay: "0s" }}><Demobat size={45} /></div>
               <div className="absolute" style={{ animation: "bat-fly 32s linear infinite", animationDelay: "-8s" }}><Demobat size={60} /></div>
@@ -397,7 +370,6 @@ const Index = () => {
               <div className="absolute" style={{ animation: "bat-fly 38s linear infinite", animationDelay: "-22s" }}><Demobat size={52} /></div>
             </div>
 
-            {/* Hover-triggered lightning flash localized to section */}
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/human:opacity-100">
               <div className="absolute inset-0" style={{ background: "hsl(0 100% 60% / 0.08)", animation: "screen-flash 2s ease-out infinite" }} />
               <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -432,10 +404,10 @@ const Index = () => {
       </SectionShell>
       </div>
 
-      {/* LEETCODE — signal transmission */}
+      {/* LEETCODE */}
       <SectionShell
         id="leetcode"
-        label="incoming signal / 07"
+        label="incoming signal / 05"
         title="LEETCODE TRANSMISSION"
         background={<div className="absolute inset-0 vhs" />}
       >
@@ -462,13 +434,12 @@ const Index = () => {
               <p className="text-xs text-muted-foreground">leetcode.com/u/Q66UbRIjoS/</p>
             </div>
           </div>
-          {/* scanline overlay */}
           <div className="pointer-events-none absolute inset-0 vhs opacity-60" />
         </motion.a>
       </SectionShell>
 
-      {/* RESUME — classified file */}
-      <SectionShell id="resume" label="classified / 08" title="CLASSIFIED FILE">
+      {/* RESUME */}
+      <SectionShell id="resume" label="classified / 06" title="CLASSIFIED FILE">
         <div className="mx-auto max-w-2xl">
           <div className="relative overflow-hidden rounded-sm border-2 border-dashed border-primary/50 bg-black/70 p-8">
             <div className="font-mono-glitch space-y-2 text-sm">
@@ -485,8 +456,18 @@ const Index = () => {
                 disabled={decrypting}
                 className="font-display mt-2 w-full rounded-sm border-2 border-primary bg-primary/10 px-6 py-3 text-sm uppercase tracking-[0.3em] text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_30px_hsl(var(--primary)/0.6)] disabled:opacity-50"
               >
-                {decrypting ? <span className="glitch" data-text="DECRYPTING...">DECRYPTING...</span> : "▸ Decrypt Resume"}
+                {decrypting ? <span className="glitch" data-text="DECRYPTING...">DECRYPTING...</span> : "▸ Decrypt & Download Resume"}
               </button>
+              {/* Direct fallback link in case popup blockers interfere */}
+              <a
+                href="/Kaashvi_Gupta_Resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                download="Kaashvi_Gupta_Resume.pdf"
+                className="font-mono-glitch mt-3 block text-center text-[11px] uppercase tracking-widest text-primary/70 underline-offset-4 hover:text-primary hover:underline"
+              >
+                ▸ direct link · open resume in new tab
+              </a>
               {decrypting && (
                 <div className="mt-4 space-y-1 text-xs text-primary/80">
                   <p>&gt; bypassing dimensional firewall...</p>
@@ -509,23 +490,33 @@ const Index = () => {
           </div>
           <AlphabetLights onSolve={solve} />
           <VHSRewind onSolve={solve} />
+          <DemogorgonBloom onSolve={solve} />
         </div>
       </SectionShell>
 
-      {/* CONTACT */}
-      <SectionShell id="contact" label="end of signal / 09" title="OPEN A CHANNEL">
-        <div className="mx-auto max-w-xl text-center">
-          <p className="font-display flicker text-3xl text-blood md:text-4xl">
+      {/* CONTACT — Emergency Transmission */}
+      <SectionShell
+        id="contact"
+        label="end of signal / 07"
+        title="EMERGENCY TRANSMISSION"
+        background={<>
+          <div className="absolute inset-0 vhs opacity-60" />
+          <Particles count={14} />
+        </>}
+      >
+        <EmergencyTransmission />
+        <div className="mx-auto mt-10 max-w-xl text-center">
+          <p className="font-display flicker text-2xl text-blood md:text-3xl">
             kaashvigupta00@gmail.com
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 font-mono-glitch text-sm text-muted-foreground">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-6 font-mono-glitch text-sm text-muted-foreground">
             <a href="mailto:kaashvigupta00@gmail.com" className="transition-colors hover:text-primary">EMAIL</a>
             <span className="text-primary/40">/</span>
             <a href="tel:+918130823345" className="transition-colors hover:text-primary">+91 8130823345</a>
             <span className="text-primary/40">/</span>
             <span>NEW DELHI</span>
           </div>
-          <p className="font-mono-glitch mt-16 text-[10px] uppercase tracking-[0.4em] text-muted-foreground/60">
+          <p className="font-mono-glitch mt-12 text-[10px] uppercase tracking-[0.4em] text-muted-foreground/60">
             // transmission ends · friends don't lie
           </p>
         </div>
