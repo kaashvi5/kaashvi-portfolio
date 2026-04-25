@@ -217,31 +217,41 @@ export const GlobalMysteryListener = ({ onSolve }: { onSolve: (id: MysteryId) =>
 };
 
 /* ---------- Scroll-to-bottom flip mystery ---------- */
-export const UpsideDownFlipWatcher = ({ onSolve, solved }: { onSolve: (id: MysteryId) => void; solved: boolean }) => {
+export const UpsideDownFlipWatcher = ({ onSolve }: { onSolve: (id: MysteryId) => void; solved?: boolean }) => {
   const [flipped, setFlipped] = useState(false);
   const stillTimer = useRef<number | null>(null);
+  const solvedRef = useRef(false);
 
   useEffect(() => {
     const onScroll = () => {
-      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-      if (atBottom) {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const atBottom = window.innerHeight + window.scrollY >= scrollHeight - 60;
+      const atTop = window.scrollY <= 40;
+
+      if (atBottom && !flipped) {
         if (stillTimer.current) window.clearTimeout(stillTimer.current);
         stillTimer.current = window.setTimeout(() => {
           setFlipped(true);
-          onSolve("scroll-upside-down");
-          window.setTimeout(() => setFlipped(false), 2200);
-        }, 1500);
-      } else if (stillTimer.current) {
-        window.clearTimeout(stillTimer.current);
-        stillTimer.current = null;
+          if (!solvedRef.current) {
+            onSolve("scroll-upside-down");
+            solvedRef.current = true;
+          }
+        }, 800);
+      } else if (atTop && flipped) {
+        // Unflip when user returns to the top
+        setFlipped(false);
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [onSolve]);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (stillTimer.current) window.clearTimeout(stillTimer.current);
+    };
+  }, [onSolve, flipped]);
 
   useEffect(() => {
-    document.body.style.transition = "transform 1s cubic-bezier(0.16, 1, 0.3, 1)";
+    document.body.style.transition = "transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)";
+    document.body.style.transformOrigin = "center center";
     document.body.style.transform = flipped ? "rotate(180deg)" : "";
     return () => { document.body.style.transform = ""; };
   }, [flipped]);
