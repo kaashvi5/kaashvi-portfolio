@@ -189,7 +189,7 @@ const Index = () => {
       {/* Floating nav */}
       <nav className="fixed left-1/2 top-6 z-50 -translate-x-1/2 rounded-full border border-primary/20 bg-background/60 px-5 py-2 backdrop-blur-md">
         <ul className="flex flex-wrap justify-center gap-5 font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground">
-          {["hero", "about", "skills", "projects", "human", "leetcode", "resume", "contact"].map((s) => (
+          {["hero", "about", "skills", "projects", "human", "leetcode", "profiles", "contact"].map((s) => (
             <li key={s}>
               <a href={`#${s}`} className="transition-colors hover:text-primary">{s}</a>
             </li>
