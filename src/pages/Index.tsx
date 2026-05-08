@@ -95,16 +95,6 @@ const projects: Project[] = [
     repo: "https://github.com/kaashvi5/VMS",
   },
   {
-    name: "Huntrix",
-    tag: "Collab · Product",
-    stack: ["React", "TypeScript"],
-    lines: [
-      "Collaborative product built with the Huntrix team.",
-      "Modern UI with focus on speed and clarity.",
-    ],
-    repo: "https://github.com/aaneya/huntrix",
-  },
-  {
     name: "MediVault",
     tag: "Blockchain · Health",
     stack: ["Solidity", "Web3", "React"],
@@ -112,17 +102,25 @@ const projects: Project[] = [
       "Secure medical record storage using blockchain-based encryption.",
       "Decentralized access control ensuring data privacy and integrity.",
     ],
+    repo: "https://github.com/aaneya/huntrix",
   },
 ];
 
 const certifications = [
   "Data Science Methodology", "IBM Cloud Essentials", "Elite Code (Open Source)",
   "Prompt Engineering", "Data Privacy Fundamentals", "GirlScript Summer of Code",
-  "Data Analysis with Python", "AWS",
+  "Data Analysis with Python", "AWS Cloud Foundations", "Machine Learning Basics",
+  "Generative AI Fundamentals", "Frontend Development", "Python for Everybody",
+];
+
+const openSource = [
+  { org: "ECWoC", full: "Eclectic Community Winter of Code", roles: ["Contributor", "Campus Ambassador"] },
+  { org: "SSoC", full: "Social Summer of Code", roles: ["Contributor", "Mentor"] },
+  { org: "GSSoC", full: "GirlScript Summer of Code", roles: ["Contributor"], tracks: ["Open Source", "AI Agents"] },
+  { org: "NSoC", full: "Nexus Spring of Code", roles: ["Contributor"] },
 ];
 
 const Index = () => {
-  const [decrypting, setDecrypting] = useState(false);
   const [walkie, setWalkie] = useState<string | null>(null);
   const { solved, solve, latest, dismissLatest, reset } = useMysteries();
 
@@ -139,22 +137,6 @@ const Index = () => {
     meta.setAttribute("content", "Kaashvi Gupta — CS student & AI/ML enthusiast. A cinematic portfolio inspired by the Upside Down.");
     if (!meta.parentNode) document.head.appendChild(meta);
   }, []);
-
-  const handleDecrypt = () => {
-    setDecrypting(true);
-    // Open in a new tab as a fallback so users always get the file
-    setTimeout(() => {
-      const a = document.createElement("a");
-      a.href = "/Kaashvi_Gupta_Resume.pdf";
-      a.download = "Kaashvi_Gupta_Resume.pdf";
-      a.target = "_blank";
-      a.rel = "noopener";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setDecrypting(false);
-    }, 1200);
-  };
 
   return (
     <main className="relative min-h-screen bg-background text-foreground">
@@ -189,7 +171,7 @@ const Index = () => {
       {/* Floating nav */}
       <nav className="fixed left-1/2 top-6 z-50 -translate-x-1/2 rounded-full border border-primary/20 bg-background/60 px-5 py-2 backdrop-blur-md">
         <ul className="flex flex-wrap justify-center gap-5 font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground">
-          {["hero", "about", "skills", "projects", "human", "leetcode", "profiles", "contact"].map((s) => (
+          {["hero", "about", "skills", "projects", "human", "leetcode", "profiles", "opensource", "certs", "contact"].map((s) => (
             <li key={s}>
               <a href={`#${s}`} className="transition-colors hover:text-primary">{s}</a>
             </li>
@@ -592,50 +574,110 @@ const Index = () => {
             </a>
           </div>
 
-          {/* Resume download — secondary */}
-          <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-sm border border-primary/30 bg-card/40 p-5 backdrop-blur-sm md:flex-row">
-            <div className="font-mono-glitch text-xs uppercase tracking-widest text-muted-foreground">
-              <span className="text-primary">▸</span> classified.file · KAASHVI_GUPTA_RESUME.pdf
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={handleDecrypt}
-                disabled={decrypting}
-                className="font-display rounded-sm border border-primary bg-primary/10 px-5 py-2 text-xs uppercase tracking-[0.25em] text-primary transition-all hover:bg-primary hover:text-primary-foreground disabled:opacity-50"
-              >
-                {decrypting ? "decrypting…" : "▸ download resume"}
-              </button>
-              <a
-                href="/Kaashvi_Gupta_Resume.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="font-mono-glitch rounded-sm border border-border px-4 py-2 text-[11px] uppercase tracking-widest text-foreground/80 hover:border-primary hover:text-primary"
-              >
-                open in tab
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <p className="font-mono-glitch mb-3 text-xs uppercase tracking-widest text-primary/70">// certifications recovered</p>
-            <div className="flex flex-wrap gap-2">
-              {certifications.map((c) => (
-                <span key={c} className="rounded-sm border border-border bg-card/40 px-3 py-1 font-mono-glitch text-xs text-foreground/80">
-                  {c}
-                </span>
-              ))}
-            </div>
-          </div>
           <AlphabetLights onSolve={solve} />
           <VHSRewind onSolve={solve} />
           <DemogorgonBloom onSolve={solve} />
         </div>
       </SectionShell>
 
+      {/* OPEN SOURCE */}
+      <SectionShell
+        id="opensource"
+        label="contributor signal / 07"
+        title="OPEN SOURCE OPS"
+        background={<><div className="absolute inset-0 vhs opacity-40" /><Particles count={8} /></>}
+      >
+        <div className="grid gap-5 md:grid-cols-2">
+          {openSource.map((p, i) => (
+            <motion.div
+              key={p.org}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="group relative overflow-hidden rounded-sm border border-primary/30 bg-card/50 p-6 backdrop-blur-sm transition-all hover:border-primary hover:shadow-[0_0_30px_hsl(var(--primary)/0.25)]"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-display text-2xl uppercase tracking-wider text-blood">{p.org}</h3>
+                  <p className="font-mono-glitch mt-1 text-[10px] uppercase tracking-widest text-muted-foreground">{p.full}</p>
+                </div>
+                <span className="font-mono-glitch text-[10px] uppercase tracking-widest text-primary/60">// node_{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {p.roles.map((r) => (
+                  <span key={r} className="font-mono-glitch rounded-sm border border-primary/40 bg-primary/10 px-3 py-1 text-[11px] uppercase tracking-widest text-primary">
+                    {r}
+                  </span>
+                ))}
+              </div>
+              {p.tracks && (
+                <div className="mt-3">
+                  <p className="font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground">tracks</p>
+                  <div className="mt-1 flex flex-wrap gap-2">
+                    {p.tracks.map((t) => (
+                      <span key={t} className="font-mono-glitch rounded-sm border border-border bg-background/60 px-2.5 py-0.5 text-[10px] uppercase tracking-widest text-foreground/80">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </SectionShell>
+
+      {/* CERTIFICATIONS — expanded vault */}
+      <SectionShell
+        id="certs"
+        label="recovered files / 08"
+        title="CERTIFICATIONS VAULT"
+        background={<><div className="absolute inset-0 vhs opacity-40" /><Particles count={6} /></>}
+      >
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {certifications.map((c, i) => (
+            <motion.div
+              key={c}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.04 }}
+              className="group flex items-start gap-3 rounded-sm border border-primary/30 bg-card/50 p-4 backdrop-blur-sm transition-all hover:border-primary hover:bg-card/70"
+            >
+              <span className="font-mono-glitch mt-0.5 text-xs text-primary">▸</span>
+              <div className="flex-1">
+                <p className="font-display text-sm uppercase tracking-wider text-foreground">{c}</p>
+                <p className="font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground">cert_{String(i + 1).padStart(3, "0")} · verified</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Public speaker mini section */}
+        <div className="relative mt-12 overflow-hidden rounded-sm border-2 border-primary/40 bg-gradient-to-br from-card/80 to-background/60 p-6 backdrop-blur-sm">
+          <div className="flex items-start gap-4">
+            <div className="font-display text-5xl leading-none text-blood">5+</div>
+            <div className="flex-1">
+              <p className="font-mono-glitch text-[10px] uppercase tracking-widest text-primary/70">// broadcast.log</p>
+              <h3 className="font-display mt-1 text-2xl uppercase tracking-wider text-foreground">Public Speaker</h3>
+              <p className="mt-2 text-sm text-foreground/80">
+                Delivered <span className="text-primary">5+ public speaking sessions</span> across campus events,
+                tech communities, and student programs — and actively looking for more stages to broadcast from.
+              </p>
+              <p className="font-mono-glitch mt-3 text-[10px] uppercase tracking-widest text-primary/70">
+                status: <span className="text-primary">OPEN_FOR_INVITES</span>
+              </p>
+            </div>
+          </div>
+          <div className="pointer-events-none absolute inset-0 vhs opacity-50" />
+        </div>
+      </SectionShell>
+
       {/* CONTACT — Emergency Transmission */}
       <SectionShell
         id="contact"
-        label="end of signal / 07"
+        label="end of signal / 09"
         title="EMERGENCY TRANSMISSION"
         background={<>
           <div className="absolute inset-0 vhs opacity-60" />
