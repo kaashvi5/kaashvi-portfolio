@@ -45,10 +45,74 @@ const experiences = [
   { role: "PowerBI Intern", org: "Codveda Technologies", date: "05/2025 — 06/2025", desc: "Built Power BI dashboards to visualize trends and support decision making." },
 ];
 
-const projects = [
-  { name: "MediVault", lines: ["Secure medical record storage system using blockchain-based encryption.", "Decentralized access control ensuring data privacy and integrity."] },
-  { name: "MindMate", lines: ["Digital mental wellness platform for emotional expression and self-reflection.", "Integrated accessible coping tools to enhance user engagement."] },
-  { name: "FraudShield", lines: ["Web app to detect and prevent online fraud using activity analysis.", "Intuitive UI to identify phishing attempts and improve awareness."] },
+type Project = {
+  name: string;
+  tag: string;
+  stack: string[];
+  lines: string[];
+  repo?: string;
+};
+
+const projects: Project[] = [
+  {
+    name: "MindMate",
+    tag: "AI · Mental Wellness",
+    stack: ["Next.js", "AI", "Tailwind"],
+    lines: [
+      "Digital mental wellness companion for emotional expression and self-reflection.",
+      "Accessible coping tools, mood journaling, and AI-guided check-ins.",
+    ],
+    repo: "https://github.com/kaashvi5/v0-mental-health-companion",
+  },
+  {
+    name: "FraudShield",
+    tag: "Security · Web",
+    stack: ["React", "Node", "Heuristics"],
+    lines: [
+      "Web app that detects and prevents online fraud through activity analysis.",
+      "Intuitive UI to flag phishing attempts and raise user awareness.",
+    ],
+    repo: "https://github.com/kaashvi5/fraud-shield",
+  },
+  {
+    name: "SkillSwap",
+    tag: "Community · Marketplace",
+    stack: ["React", "Auth", "DB"],
+    lines: [
+      "Peer-to-peer skill exchange — trade what you know for what you want to learn.",
+      "Profiles, matchmaking, and session scheduling — learning, free of cost.",
+    ],
+    repo: "https://github.com/kaashvi5/skill-swap-ex",
+  },
+  {
+    name: "VMS · Volunteer Management",
+    tag: "Events · Ops",
+    stack: ["React", "REST API", "DB"],
+    lines: [
+      "Manage and hire volunteers for events end-to-end.",
+      "Role assignment, attendance, and event analytics in one dashboard.",
+    ],
+    repo: "https://github.com/kaashvi5/VMS",
+  },
+  {
+    name: "Huntrix",
+    tag: "Collab · Product",
+    stack: ["React", "TypeScript"],
+    lines: [
+      "Collaborative product built with the Huntrix team.",
+      "Modern UI with focus on speed and clarity.",
+    ],
+    repo: "https://github.com/aaneya/huntrix",
+  },
+  {
+    name: "MediVault",
+    tag: "Blockchain · Health",
+    stack: ["Solidity", "Web3", "React"],
+    lines: [
+      "Secure medical record storage using blockchain-based encryption.",
+      "Decentralized access control ensuring data privacy and integrity.",
+    ],
+  },
 ];
 
 const certifications = [
