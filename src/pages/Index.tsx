@@ -533,46 +533,89 @@ const Index = () => {
         </motion.a>
       </SectionShell>
 
-      {/* RESUME */}
-      <SectionShell id="resume" label="classified / 06" title="CLASSIFIED FILE">
-        <div className="mx-auto max-w-2xl">
-          <div className="relative overflow-hidden rounded-sm border-2 border-dashed border-primary/50 bg-black/70 p-8">
-            <div className="font-mono-glitch space-y-2 text-sm">
-              <div className="flex justify-between border-b border-primary/30 pb-2 text-xs uppercase tracking-widest text-primary">
-                <span>● CLASSIFIED</span>
-                <span>CLEARANCE: SUBJECT 011</span>
+      {/* DEV PROFILES — replaces Resume vault */}
+      <SectionShell id="profiles" label="developer signal / 06" title="DEV PROFILES">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* GitHub card */}
+            <a
+              href="https://github.com/kaashvi5"
+              target="_blank"
+              rel="noreferrer"
+              className="group relative overflow-hidden rounded-sm border-2 border-primary/40 bg-black/70 p-7 backdrop-blur-sm transition-all hover:border-primary hover:shadow-[0_0_40px_hsl(var(--primary)/0.35)]"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
+                    <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.92.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.93 10.93 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.36-5.25 5.65.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z"/>
+                  </svg>
+                  <div>
+                    <p className="font-mono-glitch text-[10px] uppercase tracking-widest text-primary/70">// source.repository</p>
+                    <h3 className="font-display text-xl uppercase tracking-wider text-foreground">GitHub</h3>
+                  </div>
+                </div>
+                <span className="font-mono-glitch text-xs text-primary opacity-0 transition-opacity group-hover:opacity-100">↗ open</span>
               </div>
-              <p className="pt-4 text-muted-foreground">FILE: KAASHVI_GUPTA_RESUME.pdf</p>
-              <p className="text-muted-foreground">SIZE: ████ KB</p>
-              <p className="text-muted-foreground">STATUS: <span className="text-primary">ENCRYPTED</span></p>
-              <div className="my-4 h-24 rounded bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
+              <div className="mt-5 font-mono-glitch space-y-1 text-sm">
+                <p className="text-muted-foreground">&gt; user: <span className="text-foreground">kaashvi5</span></p>
+                <p className="text-muted-foreground">&gt; status: <span className="text-primary">PUSHING_COMMITS</span></p>
+                <p className="text-muted-foreground">&gt; url: github.com/kaashvi5</p>
+              </div>
+              <div className="pointer-events-none absolute inset-0 vhs opacity-50" />
+            </a>
+
+            {/* LinkedIn card */}
+            <a
+              href="https://www.linkedin.com/in/kaashvi-gupta/"
+              target="_blank"
+              rel="noreferrer"
+              className="group relative overflow-hidden rounded-sm border-2 border-primary/40 bg-black/70 p-7 backdrop-blur-sm transition-all hover:border-primary hover:shadow-[0_0_40px_hsl(var(--primary)/0.35)]"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="text-primary">
+                    <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.42v1.56h.05c.48-.9 1.65-1.85 3.4-1.85 3.63 0 4.3 2.39 4.3 5.5v6.24ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/>
+                  </svg>
+                  <div>
+                    <p className="font-mono-glitch text-[10px] uppercase tracking-widest text-primary/70">// professional.network</p>
+                    <h3 className="font-display text-xl uppercase tracking-wider text-foreground">LinkedIn</h3>
+                  </div>
+                </div>
+                <span className="font-mono-glitch text-xs text-primary opacity-0 transition-opacity group-hover:opacity-100">↗ open</span>
+              </div>
+              <div className="mt-5 font-mono-glitch space-y-1 text-sm">
+                <p className="text-muted-foreground">&gt; profile: <span className="text-foreground">kaashvi-gupta</span></p>
+                <p className="text-muted-foreground">&gt; status: <span className="text-primary">OPEN_TO_WORK</span></p>
+                <p className="text-muted-foreground">&gt; url: linkedin.com/in/kaashvi-gupta</p>
+              </div>
+              <div className="pointer-events-none absolute inset-0 vhs opacity-50" />
+            </a>
+          </div>
+
+          {/* Resume download — secondary */}
+          <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-sm border border-primary/30 bg-card/40 p-5 backdrop-blur-sm md:flex-row">
+            <div className="font-mono-glitch text-xs uppercase tracking-widest text-muted-foreground">
+              <span className="text-primary">▸</span> classified.file · KAASHVI_GUPTA_RESUME.pdf
+            </div>
+            <div className="flex gap-3">
               <button
                 onClick={handleDecrypt}
                 disabled={decrypting}
-                className="font-display mt-2 w-full rounded-sm border-2 border-primary bg-primary/10 px-6 py-3 text-sm uppercase tracking-[0.3em] text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_30px_hsl(var(--primary)/0.6)] disabled:opacity-50"
+                className="font-display rounded-sm border border-primary bg-primary/10 px-5 py-2 text-xs uppercase tracking-[0.25em] text-primary transition-all hover:bg-primary hover:text-primary-foreground disabled:opacity-50"
               >
-                {decrypting ? <span className="glitch" data-text="DECRYPTING...">DECRYPTING...</span> : "▸ Decrypt & Download Resume"}
+                {decrypting ? "decrypting…" : "▸ download resume"}
               </button>
-              {/* Direct fallback link in case popup blockers interfere */}
               <a
                 href="/Kaashvi_Gupta_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"
-                download="Kaashvi_Gupta_Resume.pdf"
-                className="font-mono-glitch mt-3 block text-center text-[11px] uppercase tracking-widest text-primary/70 underline-offset-4 hover:text-primary hover:underline"
+                className="font-mono-glitch rounded-sm border border-border px-4 py-2 text-[11px] uppercase tracking-widest text-foreground/80 hover:border-primary hover:text-primary"
               >
-                ▸ direct link · open resume in new tab
+                open in tab
               </a>
-              {decrypting && (
-                <div className="mt-4 space-y-1 text-xs text-primary/80">
-                  <p>&gt; bypassing dimensional firewall...</p>
-                  <p>&gt; channeling lightning protocol...</p>
-                  <p>&gt; download initiated.</p>
-                </div>
-              )}
             </div>
-            <div className="pointer-events-none absolute inset-0 vhs" />
           </div>
+
           <div className="mt-8">
             <p className="font-mono-glitch mb-3 text-xs uppercase tracking-widest text-primary/70">// certifications recovered</p>
             <div className="flex flex-wrap gap-2">
