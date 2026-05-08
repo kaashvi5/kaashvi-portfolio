@@ -95,16 +95,6 @@ const projects: Project[] = [
     repo: "https://github.com/kaashvi5/VMS",
   },
   {
-    name: "Huntrix",
-    tag: "Collab · Product",
-    stack: ["React", "TypeScript"],
-    lines: [
-      "Collaborative product built with the Huntrix team.",
-      "Modern UI with focus on speed and clarity.",
-    ],
-    repo: "https://github.com/aaneya/huntrix",
-  },
-  {
     name: "MediVault",
     tag: "Blockchain · Health",
     stack: ["Solidity", "Web3", "React"],
@@ -112,13 +102,22 @@ const projects: Project[] = [
       "Secure medical record storage using blockchain-based encryption.",
       "Decentralized access control ensuring data privacy and integrity.",
     ],
+    repo: "https://github.com/aaneya/huntrix",
   },
 ];
 
 const certifications = [
   "Data Science Methodology", "IBM Cloud Essentials", "Elite Code (Open Source)",
   "Prompt Engineering", "Data Privacy Fundamentals", "GirlScript Summer of Code",
-  "Data Analysis with Python", "AWS",
+  "Data Analysis with Python", "AWS Cloud Foundations", "Machine Learning Basics",
+  "Generative AI Fundamentals", "Frontend Development", "Python for Everybody",
+];
+
+const openSource = [
+  { org: "ECWoC", full: "Eclectic Community Winter of Code", roles: ["Contributor", "Campus Ambassador"] },
+  { org: "SSoC", full: "Social Summer of Code", roles: ["Contributor", "Mentor"] },
+  { org: "GSSoC", full: "GirlScript Summer of Code", roles: ["Contributor"], tracks: ["Open Source", "AI Agents"] },
+  { org: "NSoC", full: "Nexus Spring of Code", roles: ["Contributor"] },
 ];
 
 const Index = () => {
