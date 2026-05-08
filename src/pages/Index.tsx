@@ -677,7 +677,7 @@ const Index = () => {
       {/* CONTACT — Emergency Transmission */}
       <SectionShell
         id="contact"
-        label="end of signal / 07"
+        label="end of signal / 09"
         title="EMERGENCY TRANSMISSION"
         background={<>
           <div className="absolute inset-0 vhs opacity-60" />
