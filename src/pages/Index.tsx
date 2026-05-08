@@ -375,32 +375,63 @@ const Index = () => {
           </>
         }
       >
-        <div className="grid gap-6 md:grid-cols-3">
-          {projects.map((p, i) => (
-            <motion.article
-              key={p.name}
-              initial={{ opacity: 0, y: 40, rotate: -2 }}
-              whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.7 }}
-              whileHover={{ y: -6 }}
-              className="group relative overflow-hidden rounded-sm border border-primary/30 bg-gradient-to-b from-card/80 to-background/60 p-6 backdrop-blur-sm transition-all hover:border-primary hover:shadow-[0_0_40px_hsl(var(--primary)/0.3)]"
-            >
-              <div className="absolute right-3 top-3 opacity-30 transition-opacity group-hover:opacity-100">
-                <Demobat size={36} />
-              </div>
-              <p className="font-mono-glitch text-xs text-primary/70">// MISSION_0{i + 1}</p>
-              <h3 className="font-display mt-2 text-2xl uppercase tracking-wider text-foreground">{p.name}</h3>
-              <div className="mt-4 h-px w-full bg-gradient-to-r from-primary/60 to-transparent" />
-              <ul className="mt-4 space-y-2">
-                {p.lines.map((l) => (
-                  <li key={l} className="flex gap-2 text-sm text-foreground/80">
-                    <span className="text-primary">▸</span>{l}
-                  </li>
-                ))}
-              </ul>
-            </motion.article>
-          ))}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((p, i) => {
+            const num = String(i + 1).padStart(2, "0");
+            return (
+              <motion.article
+                key={p.name}
+                initial={{ opacity: 0, y: 40, rotate: -2 }}
+                whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                whileHover={{ y: -6 }}
+                className="group relative flex flex-col overflow-hidden rounded-sm border border-primary/30 bg-gradient-to-b from-card/80 to-background/60 p-6 backdrop-blur-sm transition-all hover:border-primary hover:shadow-[0_0_40px_hsl(var(--primary)/0.3)]"
+              >
+                <div className="absolute right-3 top-3 opacity-30 transition-opacity group-hover:opacity-100">
+                  <Demobat size={36} />
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="font-mono-glitch text-xs text-primary/70">// MISSION_{num}</p>
+                  <p className="font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground">{p.tag}</p>
+                </div>
+                <h3 className="font-display mt-2 text-2xl uppercase tracking-wider text-foreground">{p.name}</h3>
+                <div className="mt-3 h-px w-full bg-gradient-to-r from-primary/60 to-transparent" />
+                <ul className="mt-4 flex-1 space-y-2">
+                  {p.lines.map((l) => (
+                    <li key={l} className="flex gap-2 text-sm text-foreground/80">
+                      <span className="text-primary">▸</span>{l}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {p.stack.map((t) => (
+                    <span key={t} className="font-mono-glitch rounded-sm border border-border bg-background/60 px-2 py-0.5 text-[10px] uppercase tracking-widest text-foreground/70">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-5 flex items-center justify-between border-t border-border/60 pt-4">
+                  {p.repo ? (
+                    <a
+                      href={p.repo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-mono-glitch inline-flex items-center gap-2 text-xs uppercase tracking-widest text-primary transition-colors hover:text-primary-foreground hover:bg-primary px-2 py-1 rounded-sm border border-primary/40"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.92.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.36.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.93 10.93 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.36-5.25 5.65.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z"/>
+                      </svg>
+                      view code
+                    </a>
+                  ) : (
+                    <span className="font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground/60">private repo</span>
+                  )}
+                  <span className="font-mono-glitch text-[10px] uppercase tracking-widest text-muted-foreground/70">_{num}</span>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
       </SectionShell>
 
