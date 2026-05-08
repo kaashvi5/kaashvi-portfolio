@@ -121,7 +121,6 @@ const openSource = [
 ];
 
 const Index = () => {
-  const [decrypting, setDecrypting] = useState(false);
   const [walkie, setWalkie] = useState<string | null>(null);
   const { solved, solve, latest, dismissLatest, reset } = useMysteries();
 
@@ -138,22 +137,6 @@ const Index = () => {
     meta.setAttribute("content", "Kaashvi Gupta — CS student & AI/ML enthusiast. A cinematic portfolio inspired by the Upside Down.");
     if (!meta.parentNode) document.head.appendChild(meta);
   }, []);
-
-  const handleDecrypt = () => {
-    setDecrypting(true);
-    // Open in a new tab as a fallback so users always get the file
-    setTimeout(() => {
-      const a = document.createElement("a");
-      a.href = "/Kaashvi_Gupta_Resume.pdf";
-      a.download = "Kaashvi_Gupta_Resume.pdf";
-      a.target = "_blank";
-      a.rel = "noopener";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setDecrypting(false);
-    }, 1200);
-  };
 
   return (
     <main className="relative min-h-screen bg-background text-foreground">
